@@ -148,15 +148,15 @@ Number   Temperature_OWM   "Temperature-OWM [%.2f °C]"   {weather="locationId=h
 ## Item Configuration
 
 * **type** `atmosphere`
-    * **property** `humidity, visibility, visibility, pressure, pressure, pressureTrend, ozone, uvIndex`
+    * **property** `humidity, visibility, pressure, pressureTrend, ozone, uvIndex`
 * **type** `clouds`
     * **property** `percent`
 * **type** `condition`
     * **property** `text, observationTime, id, lastUpdate, commonId`
 * **type** `precipitation`
-    * **property** `rain, rain, snow, snow, probability`
+    * **property** `rain, snow, probability`
 * **type** `temperature`
-    * **property** `current, min, max, feel, dewpoint, minMax`
+    * **property** `current, trend, min, max, feel, dewpoint, minMax`
 * **type** `wind`
     * **property** `speed, direction, degree, gust, chill`
 
@@ -252,6 +252,7 @@ Number   Precip_Total_Inches  "Precip total [%d in]"   {weather="locationId=home
 // temperature
 Number   Temperature      "Temperature [%.2f °C]"       {weather="locationId=home, type=temperature, property=current"}
 Number   Temperature_F    "Temperature [%.2f °F]"       {weather="locationId=home, type=temperature, property=current, unit=fahrenheit"}
+String   Temperature_Trend  "Temperaturetrend [%s]"     {weather="locationId=home, type=temperature, property=trend"}
 Number   Temp_Feel        "Temperature feel [%.2f °C]"  {weather="locationId=home, type=temperature, property=feel"}
 Number   Temp_Feel_F      "Temperature feel [%.2f °F]"  {weather="locationId=home, type=temperature, property=feel, unit=fahrenheit"}
 Number   Temp_Dewpoint    "Dewpoint [%.2f °C]"          {weather="locationId=home, type=temperature, property=dewpoint"}

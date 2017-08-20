@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Gerhard Riegler
  * @author Christoph Weitkamp - Replaced org.apache.commons.httpclient with HttpUtil
+ * @author Christoph Weitkamp - Added channel temperature 'trend'
  * @since 1.6.0
  */
 public abstract class AbstractWeatherParser implements WeatherParser {
@@ -162,6 +163,21 @@ public abstract class AbstractWeatherParser implements WeatherParser {
      */
     @Override
     public void postProcess(Weather weather) throws Exception {
+        if (weather.getTemperature().getTrend() == null) {
+            Double currentTemperature = weather.getTemperature().getCurrent();
+            if (currentTemperature != null && weather.getForecast().size() > 0) {
+                Double fcMaxTemperature = weather.getForecast().get(0).getTemperature().getMax();
+                if (fcMaxTemperature != null) {
+                    if (fcMaxTemperature > currentTemperature) {
+                        weather.getTemperature().setTrend(Temperature.TREND_UP);
+                    } else if (fcMaxTemperature < currentTemperature) {
+                        weather.getTemperature().setTrend(Temperature.TREND_DOWN);
+                    } else {
+                        weather.getTemperature().setTrend(Temperature.TREND_STABLE);
+                    }
+                }
+            }
+        }
         if (weather.getAtmosphere().getPressureTrend() == null) {
             Double currentPressure = weather.getAtmosphere().getPressure();
             if (currentPressure != null && weather.getForecast().size() > 0) {

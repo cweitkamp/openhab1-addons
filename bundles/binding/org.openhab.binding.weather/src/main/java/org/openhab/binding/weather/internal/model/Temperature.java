@@ -17,9 +17,14 @@ import org.openhab.binding.weather.internal.annotation.ProviderMappings;
  * Common provider model for temperature data.
  *
  * @author Gerhard Riegler
+ * @author Christoph Weitkamp - Added channel temperature 'trend'
  * @since 1.6.0
  */
 public class Temperature {
+
+    public static final String TREND_UP = "up";
+    public static final String TREND_DOWN = "down";
+    public static final String TREND_STABLE = "stable";
 
     @ProviderMappings({
             @Provider(name = ProviderName.WUNDERGROUND, property = "current_observation.temp_c"),
@@ -31,6 +36,9 @@ public class Temperature {
             @Provider(name = ProviderName.HAMWEATHER, property = "tempC"),
             @Provider(name = ProviderName.METEOBLUE, property = "temperature") })
     private Double current;
+
+    @ProviderMappings({})
+    private String trend;
 
     @ProviderMappings({
             @Provider(name = ProviderName.WUNDERGROUND, property = "low.celsius"),
@@ -79,6 +87,20 @@ public class Temperature {
      */
     public void setCurrent(Double current) {
         this.current = current;
+    }
+
+    /**
+     * Returns the temperature trend (up, down, stable).
+     */
+    public String getTrend() {
+        return trend;
+    }
+
+    /**
+     * Sets the temperature trend.
+     */
+    public void setTrend(String trend) {
+        this.trend = trend;
     }
 
     /**
@@ -142,8 +164,9 @@ public class Temperature {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("current", current).append("min", min)
-                .append("max", max).append("feel", feel).append("dewpoint", dewpoint).toString();
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("current", current)
+                .append("trend", trend).append("min", min).append("max", max).append("feel", feel)
+                .append("dewpoint", dewpoint).toString();
     }
 
 }
