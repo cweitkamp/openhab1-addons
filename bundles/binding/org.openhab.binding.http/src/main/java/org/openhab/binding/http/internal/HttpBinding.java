@@ -83,8 +83,8 @@ public class HttpBinding extends AbstractActiveBinding<HttpBindingProvider> impl
     /** Map table to store cache data */
     private Map<String, CacheConfig> itemCache = new HashMap<String, CacheConfig>();
     private Object itemCacheLock = new Object();
-    
-    //true when the binding is shutting down
+
+    // true when the binding is shutting down
     private boolean shuttingDown;
 
     public HttpBinding() {
@@ -112,6 +112,7 @@ public class HttpBinding extends AbstractActiveBinding<HttpBindingProvider> impl
 
     @Override
     public void deactivate() {
+        logger.debug("Calling 'deactivate()' ...");
         super.deactivate();
         shuttingDown = true;
     }
@@ -145,6 +146,7 @@ public class HttpBinding extends AbstractActiveBinding<HttpBindingProvider> impl
      */
     @Override
     public void execute() {
+        logger.debug("Calling 'execute()' ...");
         if (shuttingDown) {
             logger.debug("Ignoring call to execute(), because binding is shutting down.");
             return;
@@ -482,7 +484,8 @@ public class HttpBinding extends AbstractActiveBinding<HttpBindingProvider> impl
 
                     // the config-key enumeration contains additional keys that we
                     // don't want to process here ...
-                    if (CONFIG_TIMEOUT.equals(key) || CONFIG_GRANULARITY.equals(key) || CONFIG_FORMAT.equals(key) || "service.pid".equals(key)) {
+                    if (CONFIG_TIMEOUT.equals(key) || CONFIG_GRANULARITY.equals(key) || CONFIG_FORMAT.equals(key)
+                            || "service.pid".equals(key)) {
                         continue;
                     }
 
